@@ -378,22 +378,54 @@ const grad = c=>`linear-gradient(145deg,${c[0]},${c[1]})`;
 
 let mode=null, learned=new Set();
 
-/* ═══ SPEECH — works on any browser/hosting ═══ */
-function speak(text,rate=0.78,pitch=1.28){
-  if(!window.speechSynthesis)return;
+/* ═══ SPEECH — mobile-safe, max volume ═══ */
+let audioUnlocked = false;
+
+// iOS & Android REQUIRE a user gesture before any audio plays.
+// We silently unlock on the very first tap anywhere on screen.
+function unlockAudio(){
+  if(audioUnlocked) return;
+  audioUnlocked = true;
+  const silent = new SpeechSynthesisUtterance('');
+  silent.volume = 0;
+  window.speechSynthesis.speak(silent);
+}
+['touchstart','touchend','mousedown','click'].forEach(evt=>{
+  document.addEventListener(evt, unlockAudio, {once:true, passive:true});
+});
+
+function speak(text, rate=0.70, pitch=1.3){
+  if(!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='id-ID';u.rate=rate;u.pitch=pitch;u.volume=1;
-  const vs=window.speechSynthesis.getVoices();
-  const v=vs.find(x=>x.lang.startsWith('id'))||vs.find(x=>x.lang.startsWith('ms'))||vs[0];
-  if(v)u.voice=v;
-  window.speechSynthesis.speak(u);
+
+  const doSpeak = () => {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang   = 'id-ID';
+    u.rate   = rate;
+    u.pitch  = pitch;
+    u.volume = 1;          // always max volume
+    const vs = window.speechSynthesis.getVoices();
+    const v  = vs.find(x=>x.lang.startsWith('id'))
+             || vs.find(x=>x.lang.startsWith('ms'))
+             || vs[0];
+    if(v) u.voice = v;
+    window.speechSynthesis.speak(u);
+  };
+
+  // voices may not be ready on first call — wait if needed
+  if(window.speechSynthesis.getVoices().length > 0){
+    doSpeak();
+  } else {
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.onvoiceschanged = null;
+      doSpeak();
+    };
+  }
 }
-// preload voices — critical for Chrome
-if(window.speechSynthesis){
-  window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
-}
+
+// Eagerly preload voices
+window.speechSynthesis.getVoices();
+window.speechSynthesis.onvoiceschanged = ()=> window.speechSynthesis.getVoices();
 
 /* ═══ SPLASH STARS ═══ */
 (function(){
@@ -411,6 +443,9 @@ if(window.speechSynthesis){
 /* ═══ START MODE ═══ */
 function startMode(m){
   mode=m; learned=new Set();
+  unlockAudio();
+  const greet=m==='abc'?'Halo Ubay! Ayo belajar huruf Alphabet!':'Halo Ubay! Ayo belajar huruf Hijaiyah!';
+  speak(greet,0.78,1.25);
   const sp=document.getElementById('splash');
   sp.style.transition='opacity .45s';sp.style.opacity='0';
   setTimeout(()=>{sp.style.display='none';document.getElementById('app').style.display='block';},450);
@@ -429,8 +464,8 @@ function startMode(m){
 
   buildLayout(m,data);
 
-  const greet=m==='abc'?'Halo Ubay! Ayo belajar huruf Alphabet!':'Halo Ubay! Ayo belajar huruf Hijaiyah!';
-  setTimeout(()=>speak(greet,0.78,1.25),600);
+  // Greeting spoken after first user tap (mobile autoplay policy)
+  // Will fire naturally when user taps first card
 }
 
 function goHome(){
