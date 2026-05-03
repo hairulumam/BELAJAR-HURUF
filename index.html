@@ -427,6 +427,25 @@ function speak(text, rate=0.70, pitch=1.3){
 window.speechSynthesis.getVoices();
 window.speechSynthesis.onvoiceschanged = ()=> window.speechSynthesis.getVoices();
 
+// Chain multiple utterances reliably on mobile using onend
+function speakChain(texts, rates, pitches, idx=0){
+  if(idx >= texts.length) return;
+  if(!window.speechSynthesis) return;
+  if(idx === 0) window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(texts[idx]);
+  u.lang   = 'id-ID';
+  u.rate   = rates[idx]  || 0.75;
+  u.pitch  = pitches[idx]|| 1.3;
+  u.volume = 1;
+  const vs = window.speechSynthesis.getVoices();
+  const v  = vs.find(x=>x.lang.startsWith('id'))
+           || vs.find(x=>x.lang.startsWith('ms'))
+           || vs[0];
+  if(v) u.voice = v;
+  u.onend = () => speakChain(texts, rates, pitches, idx+1);
+  window.speechSynthesis.speak(u);
+}
+
 /* ═══ SPLASH STARS ═══ */
 (function(){
   const c=document.getElementById('splashStars');
@@ -443,9 +462,10 @@ window.speechSynthesis.onvoiceschanged = ()=> window.speechSynthesis.getVoices()
 /* ═══ START MODE ═══ */
 function startMode(m){
   mode=m; learned=new Set();
+  // CRITICAL: unlockAudio + speak must run synchronously inside the tap handler
+  // so mobile browsers (iOS Safari, Android Chrome) allow audio output
   unlockAudio();
-  const greet=m==='abc'?'Halo Ubay! Ayo belajar huruf Alphabet!':'Halo Ubay! Ayo belajar huruf Hijaiyah!';
-  speak(greet,0.78,1.25);
+  speak(m==='abc'?'Halo Ubay! Ayo belajar huruf Alphabet!':'Halo Ubay! Ayo belajar huruf Hijaiyah!', 0.78, 1.25);
   const sp=document.getElementById('splash');
   sp.style.transition='opacity .45s';sp.style.opacity='0';
   setTimeout(()=>{sp.style.display='none';document.getElementById('app').style.display='block';},450);
@@ -550,9 +570,8 @@ function openOverlay(m,data,idx){
     const wl=document.getElementById('ovWL');
     wl.textContent=d.l;wl.style.color=d.c[0];
     document.getElementById('ovWR').textContent=d.w.slice(1).toLowerCase();
-    // speak
-    speak('Huruf '+d.l, 0.74, 1.3);
-    setTimeout(()=>speak(d.w, 0.76, 1.25), 1100);
+    // speak — chain utterances so mobile doesn't drop the second one
+    speakChain(['Huruf '+d.l, d.w], [0.74, 0.76], [1.3, 1.25]);
   } else {
     hijDiv.style.display='flex';abcDiv.style.display='none';
     const hl=document.getElementById('ovHijLetter');
@@ -568,8 +587,7 @@ function openOverlay(m,data,idx){
       hc.onclick=e=>{e.stopPropagation();document.querySelectorAll('.hcard').forEach(x=>x.classList.remove('active'));hc.classList.add('active');speak(h.lat,.7,1.35);};
       row.appendChild(hc);
     });
-    speak(d.name,.72,1.3);
-    setTimeout(()=>speak(d.s[0],.7,1.35),1100);
+    speakChain([d.name, d.s[0]], [0.72, 0.70], [1.3, 1.35]);
   }
 
   ov.classList.add('active');
