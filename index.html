@@ -721,8 +721,14 @@ function openOverlay(m,data,idx){
 }
 
 function closeOverlay(){
-  document.getElementById('letterOverlay').classList.remove('active');
+  // Stop real audio if playing
+  if(typeof currentAudio !== 'undefined' && currentAudio){
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
   window.speechSynthesis?.cancel();
+  document.getElementById('letterOverlay').classList.remove('active');
 }
 
 /* ═══ CELEBRATE ═══ */
@@ -904,16 +910,7 @@ function playToyAudio(idx){
   });
 }
 
-// Stop audio when overlay closes
-const _origClose = closeOverlay;
-function closeOverlay(){
-  if(currentAudio){
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-    currentAudio = null;
-  }
-  _origClose();
-}
+// Stop audio when overlay closes — handled inside the main closeOverlay below
 </script>
 </body>
 </html>
