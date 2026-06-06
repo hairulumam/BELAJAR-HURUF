@@ -245,17 +245,17 @@ body{font-family:'Baloo 2',cursive;background:#FFF9F0;height:100%}
 .num-card.done::after{content:'⭐';position:absolute;top:-7px;right:-5px;font-size:.9rem}
 .num-digit{
   font-family:'Fredoka One',cursive;
-  font-size:clamp(3rem,12vw,5rem);
+  font-size:clamp(2.5rem,10vw,4rem);
   color:white;line-height:1;
   text-shadow:4px 6px 0 rgba(0,0,0,.18);
 }
 .num-objects{
-  font-size:clamp(.9rem,3.5vw,1.3rem);
-  line-height:1.4;
-  min-height:2.5em;
+  font-size:clamp(1.8rem,7vw,2.8rem);
+  line-height:1.3;
+  min-height:1.5em;
   word-break:break-all;
-  letter-spacing:2px;
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,.15));
+  letter-spacing:3px;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.18));
 }
 .num-word{
   font-family:'Fredoka One',cursive;
@@ -267,18 +267,18 @@ body{font-family:'Baloo 2',cursive;background:#FFF9F0;height:100%}
 /* NUMBER OVERLAY */
 .ov-num-digit{
   font-family:'Fredoka One',cursive;
-  font-size:clamp(8rem,35vw,18rem);
+  font-size:clamp(6rem,26vw,13rem);
   color:white;line-height:1;
   text-shadow:8px 12px 0 rgba(0,0,0,.18);
   animation:emojiIn .55s cubic-bezier(.34,1.56,.64,1) both,bigFloat 3.5s 1s ease-in-out infinite;
   position:relative;z-index:2;
 }
 .ov-num-objects{
-  font-size:clamp(1.8rem,7vw,3.5rem);
-  line-height:1.5;text-align:center;
-  max-width:88vw;word-break:break-all;
-  letter-spacing:4px;
-  filter:drop-shadow(0 4px 8px rgba(0,0,0,.2));
+  font-size:clamp(2.8rem,11vw,5.5rem);
+  line-height:1.35;text-align:center;
+  max-width:92vw;word-break:break-all;
+  letter-spacing:6px;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,.22));
   animation:fadeUp .4s .15s ease both;
   position:relative;z-index:2;
 }
@@ -503,12 +503,12 @@ body{font-family:'Baloo 2',cursive;background:#FFF9F0;height:100%}
     <button class="sp-btn num" onclick="startMode('num')" data-mode="num">
       <div class="sp-btn-icon">🔢</div>
       <div class="sp-btn-title">Angka</div>
-      <div class="sp-btn-sub">1 - 20 • Berhitung</div>
+      <div class="sp-btn-sub">1 - 8 • Kendaraan</div>
     </button>
     <button class="sp-btn ani" onclick="startMode('ani')" data-mode="ani">
       <div class="sp-btn-icon">🐾</div>
       <div class="sp-btn-title">Hewan</div>
-      <div class="sp-btn-sub">12 Suara Hewan</div>
+      <div class="sp-btn-sub">16 Suara Hewan</div>
     </button>
   </div>
 </div>
@@ -1165,26 +1165,14 @@ function spawnConfetti(){
    ANGKA 1-20 DATA & LOGIC
 ══════════════════════════════════════ */
 const NUMS = [
-  {n:1,  word:'Satu',        en:'One',        obj:'⚽',       c:['#FF6B6B','#C0392B']},
-  {n:2,  word:'Dua',         en:'Two',         obj:'🍎',       c:['#FF9F43','#E55039']},
-  {n:3,  word:'Tiga',        en:'Three',       obj:'🌟',       c:['#F9CA24','#F0932B']},
-  {n:4,  word:'Empat',       en:'Four',        obj:'🦋',       c:['#6AB04C','#218C74']},
-  {n:5,  word:'Lima',        en:'Five',        obj:'🐟',       c:['#00D2D3','#0097A7']},
-  {n:6,  word:'Enam',        en:'Six',         obj:'🍌',       c:['#54A0FF','#2E86DE']},
-  {n:7,  word:'Tujuh',       en:'Seven',       obj:'🌈',       c:['#A29BFE','#6C5CE7']},
-  {n:8,  word:'Delapan',     en:'Eight',       obj:'🌸',       c:['#FD79A8','#E84393']},
-  {n:9,  word:'Sembilan',    en:'Nine',        obj:'🐝',       c:['#FF7675','#C0392B']},
-  {n:10, word:'Sepuluh',     en:'Ten',         obj:'⭐',       c:['#FDCB6E','#E17055']},
-  {n:11, word:'Sebelas',     en:'Eleven',      obj:'🍊',       c:['#6AB04C','#1E8449']},
-  {n:12, word:'Dua Belas',   en:'Twelve',      obj:'🐱',       c:['#FF9F43','#D35400']},
-  {n:13, word:'Tiga Belas',  en:'Thirteen',    obj:'🌙',       c:['#A29BFE','#6C5CE7']},
-  {n:14, word:'Empat Belas', en:'Fourteen',    obj:'🎈',       c:['#FD79A8','#AD1457']},
-  {n:15, word:'Lima Belas',  en:'Fifteen',     obj:'🐠',       c:['#55EFC4','#00897B']},
-  {n:16, word:'Enam Belas',  en:'Sixteen',     obj:'🦁',       c:['#74B9FF','#0984E3']},
-  {n:17, word:'Tujuh Belas', en:'Seventeen',   obj:'🌺',       c:['#FF6B6B','#922B21']},
-  {n:18, word:'Delapan Belas',en:'Eighteen',   obj:'🐘',       c:['#81ECEC','#00CEC9']},
-  {n:19, word:'Sembilan Belas',en:'Nineteen',  obj:'🦋',       c:['#FFEAA7','#D4AC0D']},
-  {n:20, word:'Dua Puluh',   en:'Twenty',      obj:'🌟',       c:['#636E72','#2D3436']},
+  {n:1, word:'Satu',    en:'One',   obj:'🚗', objName:'mobil',    key:'mobil',    c:['#FF6B6B','#C0392B']},
+  {n:2, word:'Dua',     en:'Two',   obj:'🏍️', objName:'motor',    key:'motor',    c:['#FF9F43','#E55039']},
+  {n:3, word:'Tiga',    en:'Three', obj:'🚌', objName:'bus',      key:'bus',      c:['#F9CA24','#F0932B']},
+  {n:4, word:'Empat',   en:'Four',  obj:'🚂', objName:'kereta',   key:'kereta',   c:['#6AB04C','#218C74']},
+  {n:5, word:'Lima',    en:'Five',  obj:'✈️', objName:'pesawat',  key:'pesawat',  c:['#00D2D3','#0097A7']},
+  {n:6, word:'Enam',    en:'Six',   obj:'🚢', objName:'kapal',    key:'kapal',    c:['#54A0FF','#2E86DE']},
+  {n:7, word:'Tujuh',   en:'Seven', obj:'🚑', objName:'ambulans', key:'ambulans', c:['#FD79A8','#E84393']},
+  {n:8, word:'Delapan', en:'Eight', obj:'🚲', objName:'sepeda',   key:'sepeda',   c:['#A29BFE','#6C5CE7']},
 ];
 
 // Generate repeated emoji string: n=3, obj='⚽' → '⚽⚽⚽'
@@ -1234,17 +1222,15 @@ function openOverlayNUM(idx){
   document.getElementById('ovNumWord').textContent = d.word;
   document.getElementById('ovNumEn').textContent = d.en;
 
-  // SPEAK: "{word}... {n} {obj_name}"
-  // e.g. "Satu! Satu bola"
-  const objNames = ['','bola','apel','bintang','kupu-kupu','ikan','pisang','pelangi','bunga','lebah','bintang','jeruk','kucing','bulan','balon','ikan','singa','bunga','gajah','kupu-kupu','bintang'];
-  const objName = objNames[d.n] || '';
-  const done=armAutoClose(7000);
+  // SPEAK: "{word}... {n} {kendaraan}" → lalu BUNYI kendaraannya!
+  // contoh: "Empat! 4 kereta" → tut tuuut!
+  const done=armAutoClose(10000);
   speakChain(
-    [d.word, `${d.n} ${objName}`],
+    [d.word, `${d.n} ${d.objName}`],
     [0.72, 0.70],
     [1.3, 1.25],
     0,
-    done
+    ()=>playAnimalSound(d.key, d.objName, done)   // bunyi kendaraan setelah bicara
   );
 
   markLearned('num', idx, NUMS.length);
@@ -1267,6 +1253,10 @@ const ANI = [
   {key:'monyet',   name:'Monyet',    e:'🐵', sound:'Uuk uuk aak!',   c:['#6AB04C','#1E8449']},
   {key:'katak',    name:'Katak',     e:'🐸', sound:'Kwok kwok~',     c:['#00D2D3','#0097A7']},
   {key:'keledai',  name:'Keledai',   e:'🫏', sound:'Hii-haw!',       c:['#636E72','#2D3436']},
+  {key:'bebek',    name:'Bebek',     e:'🦆', sound:'Kwek kwek kwek!',c:['#F9CA24','#F0932B']},
+  {key:'zebra',    name:'Zebra',     e:'🦓', sound:'Hihiiii~',       c:['#54A0FF','#2E86DE']},
+  {key:'ular',     name:'Ular',      e:'🐍', sound:'Sssssss~',       c:['#6AB04C','#218C74']},
+  {key:'cicak',    name:'Cicak',     e:'🦎', sound:'Ck ck ck ck!',   c:['#FF6B6B','#922B21']},
 ];
 
 /* ══ BUILD ANIMAL GRID ══ */
@@ -1284,18 +1274,218 @@ function buildANI(){
   });
 }
 
-/* ══ PUTAR SUARA HEWAN (offline base64) ══ */
+/* ══ PUTAR SUARA HEWAN/KENDARAAN ══
+   Urutan prioritas:
+   1. Audio asli base64 (ANIMAL_AUDIO)
+   2. Suara sintesis Web Audio (SYNTHS) — kendaraan & hewan baru
+   3. Ucapan TTS dari teks bunyinya */
 let aniAudio=null;
-function playAnimalSound(key,onDone){
+let _actx=null;
+function getActx(){
+  if(!_actx){
+    try{ _actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; }
+  }
+  if(_actx && _actx.state==='suspended') _actx.resume();
+  return _actx;
+}
+/* ═══════ MESIN SUARA SINTESIS (versi jernih & menarik) ═══════
+   tone(): nada dengan lintasan frekuensi, vibrato, tremolo & filter
+   noise(): derau terfilter dengan lintasan frekuensi
+   Semua suara dirancang khusus agar mudah dikenali anak 21 bulan. */
+function tone(ctx,out,p){
+  const o=ctx.createOscillator(), g=ctx.createGain();
+  const n=ctx.currentTime+(p.t||0);
+  const d=p.d||0.3, v=p.v??0.3, a=p.a??0.03, hold=p.hold??0.6;
+  o.type=p.type||'sine';
+  // lintasan frekuensi: angka tunggal ATAU [[waktu,Hz],...]
+  if(Array.isArray(p.f)){
+    o.frequency.setValueAtTime(p.f[0][1], n+p.f[0][0]);
+    for(let i=1;i<p.f.length;i++) o.frequency.linearRampToValueAtTime(p.f[i][1], n+p.f[i][0]);
+  } else o.frequency.setValueAtTime(p.f||440, n);
+  // vibrato (getar nada) → penting untuk ringkik, peluit, klakson kapal
+  if(p.vibRate){
+    const lfo=ctx.createOscillator(), lg=ctx.createGain();
+    lfo.frequency.value=p.vibRate; lg.gain.value=p.vibDepth||10;
+    lfo.connect(lg); lg.connect(o.frequency);
+    lfo.start(n); lfo.stop(n+d+0.15);
+  }
+  // envelope volume
+  g.gain.setValueAtTime(0.0001, n);
+  g.gain.exponentialRampToValueAtTime(v, n+a);
+  g.gain.setValueAtTime(v, n+d*hold);
+  g.gain.exponentialRampToValueAtTime(0.0001, n+d);
+  // tremolo (getar volume) → untuk mesin motor, bel, desis ular
+  if(p.tremRate){
+    const tl=ctx.createOscillator(), tg=ctx.createGain();
+    tl.frequency.value=p.tremRate; tg.gain.value=v*(p.tremDepth||0.5);
+    tl.connect(tg); tg.connect(g.gain);
+    tl.start(n); tl.stop(n+d+0.15);
+  }
+  let node=o;
+  // filter formant → bikin suara bebek/zebra terdengar "hidup"
+  if(p.filter){
+    const f=ctx.createBiquadFilter();
+    f.type=p.filter.type||'bandpass'; f.frequency.value=p.filter.f||1200; f.Q.value=p.filter.q||1.5;
+    o.connect(f); f.connect(g);
+  } else o.connect(g);
+  g.connect(out);
+  o.start(n); o.stop(n+d+0.15);
+}
+function noise(ctx,out,p){
+  const d=p.d||0.5, v=p.v??0.3, a=p.a??0.04;
+  const n=ctx.currentTime+(p.t||0);
+  const len=Math.ceil(ctx.sampleRate*(d+0.2));
+  const buf=ctx.createBuffer(1,len,ctx.sampleRate);
+  const data=buf.getChannelData(0);
+  for(let i=0;i<len;i++) data[i]=Math.random()*2-1;
+  const src=ctx.createBufferSource(); src.buffer=buf;
+  const f=ctx.createBiquadFilter();
+  f.type=p.ftype||'bandpass'; f.Q.value=p.q||1;
+  if(Array.isArray(p.fc)){
+    f.frequency.setValueAtTime(p.fc[0][1], n+p.fc[0][0]);
+    for(let i=1;i<p.fc.length;i++) f.frequency.linearRampToValueAtTime(p.fc[i][1], n+p.fc[i][0]);
+  } else f.frequency.setValueAtTime(p.fc||3000, n);
+  const g=ctx.createGain();
+  g.gain.setValueAtTime(0.0001, n);
+  g.gain.exponentialRampToValueAtTime(v, n+a);
+  g.gain.setValueAtTime(v, n+d*(p.hold??0.6));
+  g.gain.exponentialRampToValueAtTime(0.0001, n+d);
+  if(p.tremRate){
+    const tl=ctx.createOscillator(), tg=ctx.createGain();
+    tl.frequency.value=p.tremRate; tg.gain.value=v*(p.tremDepth||0.5);
+    tl.connect(tg); tg.connect(g.gain);
+    tl.start(n); tl.stop(n+d+0.15);
+  }
+  src.connect(f); f.connect(g); g.connect(out);
+  src.start(n); src.stop(n+d+0.2);
+}
+
+/* ═══════ RESEP SUARA — tiap fungsi mengembalikan total durasi (detik) ═══════ */
+const SYNTHS={
+  /* ── KENDARAAN ── */
+  mobil(c,o){ // "tin tin tiiiin!" klakson dua nada khas mobil
+    const beep=(t,d)=>{
+      tone(c,o,{type:'square',f:466,t,d,v:0.20,a:0.008,hold:0.85});
+      tone(c,o,{type:'square',f:587,t,d,v:0.15,a:0.008,hold:0.85});
+      tone(c,o,{type:'sawtooth',f:233,t,d,v:0.07,a:0.008,hold:0.85});
+    };
+    beep(0,0.18); beep(0.30,0.18); beep(0.62,0.65);
+    return 1.5;
+  },
+  motor(c,o){ // "brm.. brmm.. BRMMMM!" mesin nge-gas 3x makin tinggi
+    const rev=(t,d,f0,f1,v)=>{
+      tone(c,o,{type:'sawtooth',t,d,v,f:[[0,f0],[d,f1]],tremRate:27,tremDepth:0.55,hold:0.9});
+      tone(c,o,{type:'square',t,d,v:v*0.45,f:[[0,f0*2],[d,f1*2]],tremRate:27,tremDepth:0.55,hold:0.9});
+      noise(c,o,{t,d,v:v*0.3,fc:300,q:0.6,ftype:'lowpass',tremRate:27,tremDepth:0.6,hold:0.9});
+    };
+    rev(0,0.35,58,95,0.32); rev(0.5,0.45,68,150,0.38); rev(1.1,1.05,80,250,0.45);
+    return 2.4;
+  },
+  bus(c,o){ // "PAAAAM!" klakson angin besar & berat
+    [185,233,311].forEach((f,i)=>tone(c,o,{type:'sawtooth',t:0,d:1.4,v:0.2-(i*0.03),a:0.02,hold:0.8,f:[[0,f],[1.0,f],[1.4,f*0.9]]}));
+    noise(c,o,{t:0,d:1.4,v:0.06,fc:600,q:0.5,hold:0.8});
+    return 1.7;
+  },
+  kereta(c,o){ // "jes jes jes jes.. TUT TUUUUUT!" lengkap dengan uap
+    for(let i=0;i<6;i++) noise(c,o,{t:i*0.18,d:0.11,v:0.32,fc:420,q:0.7,ftype:'lowpass',a:0.005,hold:0.3});
+    const whistle=(t,d,v)=>[587,740,880].forEach((f,i)=>tone(c,o,{type:'sine',f,t,d,v:v/(i*0.6+1),vibRate:5.5,vibDepth:7,a:0.04,hold:0.8}));
+    whistle(1.15,0.3,0.24); whistle(1.6,1.2,0.28);
+    noise(c,o,{t:1.15,d:1.65,v:0.05,fc:2500,q:0.5,hold:0.8}); // uap peluit
+    return 3.0;
+  },
+  pesawat(c,o){ // "ngiuuuuuung~" jet lewat di atas kepala (efek doppler)
+    noise(c,o,{t:0,d:2.6,v:0.32,q:0.7,a:0.4,hold:0.55,fc:[[0,500],[1.1,2600],[2.6,700]]});
+    tone(c,o,{type:'sawtooth',t:0,d:2.6,v:0.10,a:0.4,hold:0.55,f:[[0,260],[1.1,640],[2.6,210]]});
+    tone(c,o,{type:'sine',t:0,d:2.6,v:0.12,a:0.4,hold:0.55,f:[[0,520],[1.1,1280],[2.6,420]]});
+    return 2.8;
+  },
+  kapal(c,o){ // "HUUUNG... HUUUUUUNG!" klakson kabut dalam & menggetar
+    const blast=(t,d)=>{
+      tone(c,o,{type:'triangle',f:98,t,d,v:0.42,vibRate:4,vibDepth:3,a:0.06,hold:0.8});
+      tone(c,o,{type:'triangle',f:65,t,d,v:0.30,vibRate:4,vibDepth:2,a:0.06,hold:0.8});
+      tone(c,o,{type:'sawtooth',f:98,t,d,v:0.07,a:0.06,hold:0.8});
+    };
+    blast(0,0.7); blast(0.95,1.5);
+    return 2.6;
+  },
+  ambulans(c,o){ // "wiiiuuu-wiiiuuu-wiiiuuu" sirine meluncur mulus (bukan patah-patah)
+    const pts=[[0,660]];
+    for(let i=1;i<=8;i++) pts.push([i*0.32, i%2?980:660]);
+    tone(c,o,{type:'sine',t:0,d:2.56,v:0.30,f:pts,hold:0.92,a:0.05});
+    tone(c,o,{type:'sawtooth',t:0,d:2.56,v:0.06,f:pts,hold:0.92,a:0.05});
+    return 2.8;
+  },
+  sepeda(c,o){ // "kriiing kriiing!" bel dering bergetar khas sepeda
+    const ring=t=>{
+      [[2093,0.22],[2637,0.12],[3322,0.07]].forEach(([f,v])=>
+        tone(c,o,{type:'sine',f,t,d:0.55,v,a:0.005,hold:0.12,tremRate:24,tremDepth:0.65}));
+    };
+    ring(0); ring(0.62);
+    return 1.5;
+  },
+  /* ── HEWAN BARU ── */
+  bebek(c,o){ // "kwek kwek kwek kweeek!" dengan formant biar serak khas bebek
+    const kwek=(t,d)=>{
+      tone(c,o,{type:'sawtooth',t,d,v:0.42,a:0.01,hold:0.5,f:[[0,440],[d,250]],tremRate:65,tremDepth:0.35,filter:{type:'bandpass',f:1100,q:1.6}});
+      tone(c,o,{type:'square',t,d,v:0.12,a:0.01,hold:0.5,f:[[0,880],[d,500]]});
+    };
+    kwek(0,0.16); kwek(0.28,0.16); kwek(0.56,0.16); kwek(0.88,0.30);
+    return 1.5;
+  },
+  zebra(c,o){ // "hihihiiiii~" ringkik bergetar lalu turun + dengus
+    tone(c,o,{type:'sawtooth',t:0,d:1.15,v:0.30,a:0.04,hold:0.75,f:[[0,1150],[0.45,950],[1.15,360]],vibRate:13,vibDepth:75,filter:{type:'bandpass',f:1400,q:1.2}});
+    tone(c,o,{type:'square',t:0,d:1.15,v:0.08,a:0.04,hold:0.75,f:[[0,575],[1.15,180]],vibRate:13,vibDepth:35});
+    noise(c,o,{t:1.3,d:0.35,v:0.22,fc:700,q:0.8,ftype:'lowpass',tremRate:30,tremDepth:0.6}); // dengus
+    return 1.9;
+  },
+  ular(c,o){ // "ssssSSSSssss~" desis naik-turun seperti ular sungguhan
+    noise(c,o,{t:0,d:2.0,v:0.34,q:0.6,ftype:'highpass',a:0.25,hold:0.7,fc:[[0,3800],[0.8,5500],[2.0,3200]],tremRate:7,tremDepth:0.35});
+    return 2.2;
+  },
+  cicak(c,o){ // "tck tck tck tck tck!" decakan cicak di dinding
+    for(let i=0;i<5;i++){
+      const t=i*0.22;
+      tone(c,o,{type:'square',t,d:0.045,v:0.26,a:0.003,hold:0.2,f:[[0,2900-(i*120)],[0.045,1600]]});
+      noise(c,o,{t,d:0.04,v:0.14,fc:4200,q:2,a:0.003,hold:0.2});
+    }
+    return 1.4;
+  },
+};
+function playSynth(key,onDone){
+  const fn=SYNTHS[key];
+  if(!fn){ if(typeof onDone==='function') onDone(); return false; }
+  const ctx=getActx();
+  if(!ctx){ if(typeof onDone==='function') onDone(); return false; }
+  try{
+    // master: gain → compressor (biar tidak pecah/clipping di speaker HP)
+    const out=ctx.createGain(); out.gain.value=0.95;
+    const comp=ctx.createDynamicsCompressor();
+    comp.threshold.value=-12; comp.ratio.value=6;
+    out.connect(comp); comp.connect(ctx.destination);
+    const dur=fn(ctx,out);
+    if(typeof onDone==='function') setTimeout(onDone, dur*1000+150);
+  }catch(e){ if(typeof onDone==='function') onDone(); }
+  return true;
+}
+
+function playAnimalSound(key,fallbackText,onDone){
   // hentikan suara sebelumnya
   if(aniAudio){ aniAudio.pause(); aniAudio.currentTime=0; aniAudio=null; }
   window.speechSynthesis?.cancel();
   const src=ANIMAL_AUDIO[key];
-  if(!src){ if(onDone)onDone(); return; }
-  const a=new Audio(src);
-  a.volume=1; aniAudio=a;
-  if(typeof onDone==='function') a.onended=onDone;
-  a.play().catch(()=>{ if(onDone)onDone(); });
+  if(src){
+    const a=new Audio(src);
+    a.volume=1; aniAudio=a;
+    if(typeof onDone==='function') a.onended=onDone;
+    a.play().catch(()=>{
+      // gagal play → coba sintesis → terakhir TTS
+      if(!playSynth(key,onDone) && fallbackText) speak(fallbackText,.7,1.3,onDone);
+    });
+    return;
+  }
+  if(SYNTHS[key]){ playSynth(key,onDone); return; }
+  if(fallbackText){ speak(fallbackText,.7,1.3,onDone); return; }
+  if(typeof onDone==='function') onDone();
 }
 
 /* ══ OVERLAY HEWAN ══
@@ -1326,12 +1516,12 @@ function openOverlayANI(idx){
     e.stopPropagation();
     const d2=armAutoClose(6000);
     // ucap nama lalu putar suara aslinya lagi
-    speak(d.name,.72,1.25,()=>playAnimalSound(d.key,d2));
+    speak(d.name,.72,1.25,()=>playAnimalSound(d.key,d.sound,d2));
   };
 
   const done=armAutoClose(6000);
   // urutan: sebut nama hewan → suara aslinya → auto tutup
-  speak(d.name,.72,1.25,()=>playAnimalSound(d.key,done));
+  speak(d.name,.72,1.25,()=>playAnimalSound(d.key,d.sound,done));
 
   markLearned('ani',idx,ANI.length);
 }
